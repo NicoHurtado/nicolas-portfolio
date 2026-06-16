@@ -19,7 +19,7 @@ export default function Hero() {
           <p className="mb-5 text-xs uppercase tracking-[0.16em] text-clay">
             {profile.role}
           </p>
-          <h1 className="font-serif text-5xl font-normal leading-[1.0] text-cream sm:text-6xl lg:text-7xl">
+          <h1 className="font-serif text-[40px] font-normal leading-[1.05] text-cream sm:text-6xl sm:leading-[1.0] lg:text-7xl">
             Nicolas <span className="italic text-clay">Hurtado A.</span>
           </h1>
           <p className="mt-5 text-[15px] text-muted">{profile.tagline}</p>

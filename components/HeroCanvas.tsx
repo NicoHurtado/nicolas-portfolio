@@ -647,7 +647,7 @@ export default function HeroCanvas() {
         aria-hidden="true"
       />
       <div
-        className="absolute top-0 right-0 h-full w-[62%] z-[2]"
+        className="absolute top-0 right-0 hidden h-full w-[62%] z-[2] lg:block"
         style={{
           WebkitMaskImage:
             "linear-gradient(90deg, transparent 0%, #000 26%, #000 100%)",
