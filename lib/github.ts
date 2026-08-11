@@ -9,7 +9,8 @@ export type GithubRepo = {
   language: string | null;
   stars: number;
   topics: string[];
-  updatedAt: string;
+  createdAt: string;
+  pushedAt: string;
 };
 
 type GithubApiRepo = {
@@ -22,12 +23,15 @@ type GithubApiRepo = {
   topics?: string[];
   fork: boolean;
   archived: boolean;
-  updated_at: string;
+  created_at: string;
+  pushed_at: string;
 };
 
 /**
  * Fetches public repos for the profile user, drops forks/archived and any repo
- * listed in `excludedRepos`, and returns a lightweight, sorted view.
+ * listed in `excludedRepos`, and returns a lightweight view sorted newest-first
+ * by repository creation date — so a project pushed to GitHub shows up at the
+ * top of the feed on its own, with no edit to this site.
  * Pass a `limit` to cap the result; omit it to return every matching repo.
  * Cached at the framework layer; degrades to an empty list on any error.
  */
@@ -36,7 +40,7 @@ export async function fetchGithubRepos(limit?: number): Promise<GithubRepo[]> {
 
   try {
     const res = await fetch(
-      `https://api.github.com/users/${profile.githubUser}/repos?per_page=100&sort=updated`,
+      `https://api.github.com/users/${profile.githubUser}/repos?per_page=100&sort=created&direction=desc`,
       {
         headers: {
           Accept: "application/vnd.github+json",
@@ -63,12 +67,12 @@ export async function fetchGithubRepos(limit?: number): Promise<GithubRepo[]> {
         language: r.language,
         stars: r.stargazers_count,
         topics: r.topics ?? [],
-        updatedAt: r.updated_at,
+        createdAt: r.created_at,
+        pushedAt: r.pushed_at,
       }))
-      .sort((a, b) => {
-        if (b.stars !== a.stars) return b.stars - a.stars;
-        return +new Date(b.updatedAt) - +new Date(a.updatedAt);
-      })
+      // Newest repository first. Swap `createdAt` for `pushedAt` here to order
+      // by most recent activity instead of by when the project was started.
+      .sort((a, b) => +new Date(b.createdAt) - +new Date(a.createdAt))
       .slice(0, limit ?? undefined);
   } catch {
     return [];

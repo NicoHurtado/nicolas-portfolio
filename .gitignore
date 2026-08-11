@@ -1,4 +1,6 @@
 /node_modules
+remotion/node_modules
+remotion/out
 /.next
 /out
 /build

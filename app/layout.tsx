@@ -1,29 +1,43 @@
 import type { Metadata } from "next";
-import { Inter, Newsreader } from "next/font/google";
+import { Inter, Inter_Tight, Instrument_Serif, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-sans",
   display: "swap",
 });
 
-const newsreader = Newsreader({
+const interTight = Inter_Tight({
   subsets: ["latin"],
-  variable: "--font-newsreader",
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: "400",
   style: ["normal", "italic"],
-  weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["400", "500"],
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Nicolas Hurtado — Data Engineer & AI",
+  title: "Nicolas Hurtado — Data, AI & Intelligent Systems",
   description:
-    "Portfolio of Nicolas Hurtado — data engineering, data science, AI and backend. Projects, certifications, and experience.",
+    "Portfolio of Nicolas Hurtado — data engineering, data science, AI and backend. Experience, projects, certifications.",
   openGraph: {
-    title: "Nicolas Hurtado — Data Engineer & AI",
+    title: "Nicolas Hurtado — Data, AI & Intelligent Systems",
     description:
-      "Data engineering, data science, AI and backend. Projects, certifications, and experience.",
+      "Data engineering, data science, AI and backend. Experience, projects, certifications.",
     type: "website",
   },
 };
@@ -34,8 +48,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${newsreader.variable}`}>
-      <body className="font-sans bg-ink text-sand antialiased">{children}</body>
+    <html
+      lang="en"
+      className={`${inter.variable} ${interTight.variable} ${instrumentSerif.variable} ${plexMono.variable}`}
+    >
+      <body className="bg-paper font-sans text-body antialiased">{children}</body>
     </html>
   );
 }

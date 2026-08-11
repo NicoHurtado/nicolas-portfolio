@@ -1,81 +1,89 @@
-import Section from "./Section";
-import Reveal from "./Reveal";
-import RepoGallery, { type GalleryItem } from "./RepoGallery";
+"use client";
+
 import { highlightedProjects } from "@/data/projects";
-import { profile } from "@/data/profile";
-import { fetchGithubRepos } from "@/lib/github";
+import type { GithubRepo } from "@/lib/github";
+import RepoGallery from "./RepoGallery";
+import { Kicker, Reveal, WordsIn } from "./motion";
 
-function ArrowLink({
-  href,
-  children,
-}: {
-  href: string;
-  children: React.ReactNode;
-}) {
+export default function Projects({ repos }: { repos: GithubRepo[] }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      className="group/link inline-flex items-center gap-1.5 text-[13px] font-medium text-clay transition-colors hover:text-clay2"
-    >
-      {children}
-      <span
-        aria-hidden
-        className="transition-transform group-hover/link:translate-x-0.5"
-      >
-        →
-      </span>
-    </a>
-  );
-}
+    <section id="projects" className="shell scroll-mt-24 py-24 sm:py-32">
+      <Kicker index="03" label="Selected work" />
+      <h2 className="mt-6 max-w-3xl font-display text-[clamp(2.4rem,4.5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
+        <WordsIn text="Products that are" />{" "}
+        <WordsIn
+          text="alive in production."
+          delay={0.15}
+          className="font-serif font-normal italic tracking-normal"
+        />
+      </h2>
 
-export default async function Projects() {
-  const repos = await fetchGithubRepos();
+      {/* featured projects — quiet editorial rows */}
+      <div className="mt-16">
+        {highlightedProjects.map((p, i) => (
+          <Reveal key={p.name} delay={i * 0.04}>
+            <article className="group grid gap-5 border-t border-line py-10 transition-colors duration-500 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-12">
+              <div>
+                <div className="flex items-baseline gap-4">
+                  <span className="font-mono text-[11px] text-faint">
+                    0{i + 1}
+                  </span>
+                  <h3 className="font-display text-[clamp(1.6rem,3vw,2.4rem)] font-semibold tracking-tight text-ink transition-transform duration-500 ease-soft group-hover:translate-x-1.5">
+                    {p.name}
+                  </h3>
+                </div>
+                <div className="mt-4 flex flex-wrap gap-2 md:pl-10">
+                  {p.technologies.map((t) => (
+                    <span
+                      key={t}
+                      className="rounded-full bg-surface px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.1em] text-muted"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-  // Merge the deployed/highlighted builds into the same feed as every other
-  // repo, flagged `featured` so the gallery can give them a modest accent
-  // without walling them off into a separate section.
-  const featured: GalleryItem[] = highlightedProjects.map((p) => ({
-    name: p.name,
-    description: p.description,
-    url: p.code,
-    liveUrl: p.live,
-    language: p.technologies[0] ?? null,
-    stars: 0,
-    featured: true,
-  }));
+              <div className="flex flex-col justify-between gap-5 md:pt-1.5">
+                <p className="leading-relaxed text-body">{p.description}</p>
+                <div className="flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.14em]">
+                  {p.live ? (
+                    <a
+                      href={p.live}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group/link inline-flex items-center gap-1.5 text-ink transition-colors hover:text-accent"
+                    >
+                      Live
+                      <span className="transition-transform duration-300 ease-soft group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5">
+                        ↗
+                      </span>
+                    </a>
+                  ) : null}
+                  <a
+                    href={p.code}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group/link inline-flex items-center gap-1.5 text-muted transition-colors hover:text-ink"
+                  >
+                    Code
+                    <span className="transition-transform duration-300 ease-soft group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5">
+                      ↗
+                    </span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </Reveal>
+        ))}
+      </div>
 
-  const fromRepos: GalleryItem[] = repos.map((r) => ({
-    name: r.name,
-    description: r.description,
-    url: r.url,
-    liveUrl: r.homepage ?? undefined,
-    language: r.language,
-    stars: r.stars,
-    featured: false,
-  }));
-
-  const items = [...featured, ...fromRepos];
-
-  return (
-    <Section
-      id="projects"
-      index="03"
-      eyebrow="Projects"
-      title={
-        <>
-          Things I&apos;ve built and{" "}
-          <span className="italic text-clay">shipped</span>.
-        </>
-      }
-      intro="Every public project pulled live from GitHub — filter by language or expand to browse them all. A few are deployed and running in production, marked with a Live badge."
-    >
-      {items.length > 0 ? <RepoGallery items={items} /> : null}
-
-      <Reveal className="mt-10">
-        <ArrowLink href={profile.github}>See everything on GitHub</ArrowLink>
-      </Reveal>
-    </Section>
+      {/* live GitHub feed */}
+      {repos.length > 0 ? (
+        <div className="mt-20">
+          <RepoGallery repos={repos} />
+        </div>
+      ) : null}
+    </section>
   );
 }

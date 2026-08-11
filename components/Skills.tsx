@@ -1,181 +1,93 @@
-import Section from "./Section";
-import Reveal from "./Reveal";
+"use client";
+
 import { skillGroups, personGroups, aiTools } from "@/data/skills";
+import { Kicker, Reveal, WordsIn } from "./motion";
+import TechIcon from "./TechIcon";
 
-// Simple Icons slugs for items that have a brand icon (others render text-only).
-const iconSlugs: Record<string, string> = {
-  // Languages
-  Python: "python",
-  R: "r",
-  TypeScript: "typescript",
-  Bash: "gnubash",
-  // AI & Machine Learning
-  TensorFlow: "tensorflow",
-  PyTorch: "pytorch",
-  "scikit-learn": "scikitlearn",
-  Polars: "polars",
-  NumPy: "numpy",
-  // Data & Databases
-  PostgreSQL: "postgresql",
-  MongoDB: "mongodb",
-  MySQL: "mysql",
-  Snowflake: "snowflake",
-  // Platforms
-  FastAPI: "fastapi",
-  Git: "git",
-  Docker: "docker",
-  Terraform: "terraform",
-  "Node.js": "nodedotjs",
-  Django: "django",
-  Flask: "flask",
-  GraphQL: "graphql",
-  Postman: "postman",
-  Vercel: "vercel",
-  Neon: "neon",
-  // AI Tools
-  "Claude Code": "claude",
-  "Claude Cowork": "claude",
-  "Claude Design": "claude",
-  Gemini: "googlegemini",
-  Cursor: "cursor",
-  n8n: "n8n",
-};
-
-// AWS services share one generic AWS logo (Simple Icons dropped AWS brand marks).
-const awsItems = new Set([
-  "Redshift",
-  "DynamoDB",
-  "S3",
-  "Lambda",
-  "EC2",
-  "AWS Data & Analytics Tools",
-]);
-const AWS_LOGO =
-  "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg";
-
-function SkillIcon({ name, tint = "E8E2D4" }: { name: string; tint?: string }) {
-  if (awsItems.has(name)) {
-    // tinted via CSS mask to stay monochrome with the theme
-    return (
-      <span
-        aria-hidden
-        className="inline-block h-3.5 w-5 shrink-0 opacity-90"
-        style={{
-          backgroundColor: `#${tint}`,
-          maskImage: `url(${AWS_LOGO})`,
-          WebkitMaskImage: `url(${AWS_LOGO})`,
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-          maskPosition: "center",
-          WebkitMaskPosition: "center",
-          maskSize: "contain",
-          WebkitMaskSize: "contain",
-        }}
-      />
-    );
-  }
-  const slug = iconSlugs[name];
-  if (!slug) return null;
+/** Chip with an optional minimal glyph for the technologies that have one. */
+function Chip({ label }: { label: string }) {
   return (
-    <img
-      src={`https://cdn.simpleicons.org/${slug}/${tint}`}
-      alt=""
-      width={14}
-      height={14}
-      className="h-3.5 w-3.5 opacity-90"
-    />
+    <span className="inline-flex items-center gap-2 rounded-full border border-line bg-paper px-3.5 py-1.5 text-[13px] text-body transition-colors duration-300 hover:border-ink">
+      <TechIcon name={label} className="h-3.5 w-3.5 shrink-0 text-muted" />
+      {label}
+    </span>
   );
 }
 
 export default function Skills() {
   return (
-    <Section
-      id="skills"
-      index="01"
-      eyebrow="Toolkit"
-      title={
-        <>
-          The stack I reach for to{" "}
-          <span className="italic text-clay">ship</span>.
-        </>
-      }
-      intro="Languages, frameworks, and platforms I use day to day across data engineering, machine learning, and backend work."
-    >
-      <div className="grid gap-px overflow-hidden rounded-2xl border border-line/70 bg-line/40 sm:grid-cols-2 lg:grid-cols-4">
-        {skillGroups.map((group, i) => (
-          <Reveal
-            key={group.title}
-            delay={i * 80}
-            className="group bg-ink2/70 p-7 transition-colors hover:bg-ink2"
-          >
-            <h3 className="text-[13px] uppercase tracking-[0.14em] text-clay2">
-              {group.title}
-            </h3>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-1.5 rounded-full border border-line bg-ink/40 px-3 py-1 text-[13px] text-sand transition-colors group-hover:border-line"
-                >
-                  <SkillIcon name={item} />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        ))}
-      </div>
+    <section id="skills" className="scroll-mt-24 bg-surface py-24 sm:py-32">
+      <div className="shell">
+        <Kicker index="04" label="Capabilities" />
+        <h2 className="mt-6 max-w-3xl font-display text-[clamp(2.4rem,4.5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
+          <WordsIn text="AI and data, put to work on" />{" "}
+          <WordsIn
+            text="everyday problems."
+            delay={0.15}
+            className="font-serif font-normal italic tracking-normal"
+          />
+        </h2>
 
-      {/* Skills as a person — analytical + soft skills */}
-      <div className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-line/70 bg-line/40 sm:grid-cols-2">
-        {personGroups.map((group, i) => (
-          <Reveal
-            key={group.title}
-            delay={i * 80}
-            className="group bg-ink2/70 p-7 transition-colors hover:bg-ink2"
-          >
-            <h3 className="text-[13px] uppercase tracking-[0.14em] text-clay2">
-              {group.title}
-            </h3>
-            <ul className="mt-4 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-center gap-1.5 rounded-full border border-line bg-ink/40 px-3 py-1 text-[13px] text-sand transition-colors group-hover:border-line"
-                >
-                  <SkillIcon name={item} />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        ))}
-      </div>
+        <div className="mt-16">
+          {skillGroups.map((group, i) => (
+            <Reveal key={group.title} delay={i * 0.04}>
+              <div className="grid gap-4 border-t border-line/90 py-8 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-12">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-ink">
+                  {group.title}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <Chip key={item} label={item} />
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          ))}
 
-      <Reveal
-        delay={120}
-        className="mt-6 flex flex-col items-start gap-4 rounded-2xl border border-clay/25 bg-clay/[0.06] p-7 sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div>
-          <h3 className="text-[13px] uppercase tracking-[0.14em] text-clay2">
-            AI Tools I build with
-          </h3>
-          <p className="mt-2 text-sm text-muted">
-            Production work grounded in frontier AI tooling.
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {aiTools.map((tool) => (
-            <span
-              key={tool}
-              className="flex items-center gap-1.5 rounded-full bg-clay px-3.5 py-1.5 text-[13px] font-medium text-ink"
-            >
-              <SkillIcon name={tool} tint="16140F" />
-              {tool}
-            </span>
+          {/* AI-native tooling — the differentiator */}
+          <Reveal>
+            <div className="grid gap-4 border-t border-line/90 py-8 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-12">
+              <div>
+                <h3 className="font-display text-xl font-semibold tracking-tight text-ink">
+                  Agentic AI{" "}
+                  <span className="font-serif font-normal italic">
+                    & AI-native engineering
+                  </span>
+                </h3>
+                <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted">
+                  Building and orchestrating AI agents for coding, design, and
+                  automation.
+                </p>
+              </div>
+              <div className="flex flex-wrap content-start gap-2">
+                {aiTools.map((tool) => (
+                  <Chip key={tool} label={tool} />
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          {personGroups.map((group) => (
+            <Reveal key={group.title}>
+              <div className="grid gap-4 border-t border-line/90 py-8 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] md:gap-12">
+                <h3 className="font-display text-xl font-semibold tracking-tight text-ink">
+                  {group.title}
+                </h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full px-3.5 py-1.5 text-[13px] text-muted"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
           ))}
         </div>
-      </Reveal>
-    </Section>
+      </div>
+    </section>
   );
 }

@@ -8,6 +8,14 @@ export type Project = {
 
 export const highlightedProjects: Project[] = [
   {
+    name: "Medellín Travel Transportes",
+    description:
+      "The full digital operation of a high-volume transport & tourism agency: public booking platform with secure payments, real-time updates, and an admin dashboard running the day-to-day business.",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+    code: "https://github.com/NicoHurtado/MedellinTravelTransportes",
+    live: "https://www.medellintransportes.com/",
+  },
+  {
     name: "Cursia Enterprise",
     description:
       "B2B corporate training platform with AI-assisted course creation, admin panel, client dashboard, and an employee view with quizzes and certificates.",
@@ -16,20 +24,19 @@ export const highlightedProjects: Project[] = [
     live: "https://cursia-enterprise.vercel.app",
   },
   {
-    name: "MedellinTravelTransportes",
+    name: "Fleet Compliance App",
     description:
-      "Transport and tour booking platform for Medellín. Service catalog, booking system, real-time updates, and an admin dashboard.",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-    code: "https://github.com/NicoHurtado/MedellinTravelTransportes",
-    live: "https://www.medellintransportes.com/",
-  },
-  {
-    name: "FUEC_TMT",
-    description:
-      "Driver and vehicle management system for transport and tourism agencies. Access-code authentication, admin panel, and fleet tracking.",
+      "Internal web app that keeps a transport fleet legally compliant: issues and tracks regulatory contracts (FUEC), manages driver and vehicle records, with access-code authentication and an admin panel. In daily use, 100% adherence to standards.",
     technologies: ["Python", "FastAPI", "PostgreSQL", "Koyeb"],
     code: "https://github.com/NicoHurtado/FUEC_TMT",
     live: "https://fuec-tmt.onrender.com/auth/login",
+  },
+  {
+    name: "Finance Manager",
+    description:
+      "Full-stack financial analytics PWA to track expenses, income, and accounts — with savings goals, net-worth tracking, and visual analytics.",
+    technologies: ["Next.js", "TypeScript", "MongoDB", "PWA"],
+    code: "https://github.com/NicoHurtado/coffee",
   },
 ];
 
@@ -86,4 +93,5 @@ export const excludedRepos: string[] = [
   "MedellinTravelTransportes",
   "FUEC_TMT",
   "cursia-enterprise",
+  "coffee",
 ];

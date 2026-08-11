@@ -6,7 +6,7 @@ export type SkillGroup = {
 export const skillGroups: SkillGroup[] = [
   {
     title: "Languages",
-    items: ["Python", "SQL", "R", "TypeScript", "Bash"],
+    items: ["Python", "SQL", "TypeScript", "Java", "Bash"],
   },
   {
     title: "AI & Machine Learning",
@@ -14,6 +14,8 @@ export const skillGroups: SkillGroup[] = [
       "Machine Learning",
       "LLMs",
       "Fine-tuning",
+      "RAG",
+      "AI Agents",
       "TensorFlow",
       "PyTorch",
       "scikit-learn",
@@ -29,10 +31,9 @@ export const skillGroups: SkillGroup[] = [
       "MySQL",
       "Redshift",
       "DynamoDB",
-      "S3",
       "Iceberg",
-      "DataLakes",
-      "Snowflake",
+      "Data Lakes",
+      "Apache Spark",
     ],
   },
   {
@@ -44,17 +45,12 @@ export const skillGroups: SkillGroup[] = [
       "Terraform",
       "Node.js",
       "Django",
-      "Flask",
       "GraphQL",
       "REST APIs",
       "Postman",
       "Vercel",
-      "Neon",
-      "CI/CD",
       "Microservices",
-      "Lambda",
-      "EC2",
-      "AWS Data & Analytics Tools",
+      "AWS Services, Data & Analytics Tools",
       "Azure",
     ],
   },
@@ -64,11 +60,13 @@ export const personGroups: SkillGroup[] = [
   {
     title: "Analytical",
     items: [
-      "Data Analysis",
-      "Data Visualization",
-      "Statistical Analysis",
+      "Data Science",
+      "Statistics",
+      "Predictive Modeling",
       "Data Modeling",
-      "Business Intelligence",
+      "Data Visualization & BI",
+      "System Design",
+      "Monitoring & Maintenance",
     ],
   },
   {
@@ -89,12 +87,4 @@ export const personGroups: SkillGroup[] = [
   },
 ];
 
-export const aiTools: string[] = [
-  "Claude Code",
-  "Claude Cowork",
-  "Claude Design",
-  "Opencode",
-  "Gemini",
-  "Cursor",
-  "n8n",
-];
+export const aiTools: string[] = ["Claude", "OpenAI", "MCP", "n8n"];

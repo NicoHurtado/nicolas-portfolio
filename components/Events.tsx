@@ -1,82 +1,179 @@
-import Section from "./Section";
-import Reveal from "./Reveal";
-import { events } from "@/data/events";
+"use client";
 
-export default function Events() {
+import { useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import type { EventWithImages } from "@/data/events";
+import type { EventImage } from "@/lib/eventImages";
+import { EASE, Kicker, Reveal, WordsIn } from "./motion";
+
+/**
+ * Collage layouts by photo count. Every event fills the same frame, so the
+ * preview never resizes as you move down the list: one photo fills it, several
+ * split it. Odd counts give the first photo a full-width band on top.
+ */
+const LAYOUTS: Record<number, { grid: string; spans: string[] }> = {
+  1: { grid: "grid-cols-1 grid-rows-1", spans: [""] },
+  2: { grid: "grid-cols-1 grid-rows-2", spans: ["", ""] },
+  3: { grid: "grid-cols-2 grid-rows-2", spans: ["col-span-2", "", ""] },
+  4: { grid: "grid-cols-2 grid-rows-2", spans: ["", "", "", ""] },
+  5: { grid: "grid-cols-2 grid-rows-3", spans: ["col-span-2", "", "", "", ""] },
+  6: { grid: "grid-cols-2 grid-rows-3", spans: ["", "", "", "", "", ""] },
+};
+
+const MAX = 6;
+
+function Collage({
+  images,
+  sizes,
+}: {
+  images: EventImage[];
+  sizes: string;
+}) {
+  const shown = images.slice(0, MAX);
+  const layout = LAYOUTS[shown.length] ?? LAYOUTS[MAX];
+
+  if (shown.length === 0) {
+    return <div className="h-full w-full rounded-xl bg-surface" />;
+  }
+
   return (
-    <Section
-      id="events"
-      index="04"
-      eyebrow="Events"
-      title={
-        <>
-          Events I&apos;ve{" "}
-          <span className="italic text-clay">attended</span>.
-        </>
-      }
-      intro="Conferences, competitions, and visits that shaped how I think about building."
-    >
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {events.map((event, i) => (
-          <Reveal
-            key={event.title}
-            as="article"
-            delay={i * 80}
-            className="group flex flex-col overflow-hidden rounded-2xl border border-line/70 bg-ink2/60 transition-all hover:border-clay/40 hover:bg-ink2"
-          >
-            {event.images.length > 0 ? (
-              <div className="relative aspect-[16/10] overflow-hidden bg-ink">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={event.images[0]}
-                  alt={event.title}
-                  loading="lazy"
-                  className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-[1.04]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink2 via-ink2/10 to-transparent" />
-                {event.images.length > 1 ? (
-                  <span className="absolute right-3 top-3 rounded-full bg-ink/70 px-2 py-0.5 text-[11px] text-cream backdrop-blur">
-                    +{event.images.length - 1}
-                  </span>
-                ) : null}
-              </div>
-            ) : null}
+    <div className={`grid h-full w-full gap-1.5 ${layout.grid}`}>
+      {shown.map((image, i) => (
+        <div
+          key={image.src}
+          className={`relative overflow-hidden rounded-xl bg-surface ${
+            layout.spans[i] ?? ""
+          }`}
+        >
+          <Image
+            src={image.src}
+            alt=""
+            fill
+            sizes={sizes}
+            unoptimized={image.raw}
+            className="object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
-            <div className="flex flex-1 flex-col p-6">
-              <div className="flex items-center justify-between gap-3">
-                <span className="text-[11px] uppercase tracking-[0.12em] text-clay2">
-                  {event.organizer}
-                </span>
-                <span className="font-mono text-[11px] text-muted">
-                  {event.date}
-                </span>
-              </div>
-              <h3 className="mt-3 font-serif text-xl font-normal leading-tight text-cream">
-                {event.title}
-              </h3>
-              <p className="mt-2.5 flex-1 text-[14px] leading-relaxed text-muted">
-                {event.description}
-              </p>
-              {event.certificate ? (
-                <a
-                  href={event.certificate}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-1.5 text-[13px] font-medium text-clay transition-colors hover:text-clay2"
-                >
-                  Certificate
-                  <span
-                    aria-hidden
-                    className="transition-transform group-hover:translate-x-0.5"
+export default function Events({ events }: { events: EventWithImages[] }) {
+  const [active, setActive] = useState(0);
+  const current = events[active];
+
+  return (
+    <section id="events" className="scroll-mt-24 py-24 sm:py-32">
+      <div className="shell">
+        <Kicker index="06" label="Events & community" />
+        <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+          <h2 className="max-w-3xl font-display text-[clamp(2.4rem,4.5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
+            <WordsIn text="Out in" />{" "}
+            <WordsIn
+              text="the ecosystem."
+              delay={0.15}
+              className="font-serif font-normal italic tracking-normal"
+            />
+          </h2>
+          <Reveal delay={0.2}>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+              {events.length} events & visits
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
+          {/* the list: every row the same size */}
+          <div>
+            {events.map((event, i) => {
+              const isActive = i === active;
+              return (
+                <Reveal key={event.title} delay={i * 0.04} y={18}>
+                  <div
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    className="group border-t border-line py-6 transition-colors duration-300 last:border-b"
                   >
-                    →
-                  </span>
-                </a>
-              ) : null}
+                    <div className="flex items-baseline justify-between gap-4">
+                      <h3
+                        className={`font-display text-lg font-semibold tracking-tight transition-all duration-500 ease-soft sm:text-xl ${
+                          isActive ? "translate-x-1.5 text-ink" : "text-body"
+                        }`}
+                      >
+                        {event.title}
+                      </h3>
+                      <span className="shrink-0 font-mono text-[11px] uppercase tracking-[0.12em] text-faint">
+                        {event.date}
+                      </span>
+                    </div>
+
+                    <p
+                      className={`mt-1 font-mono text-[10.5px] uppercase tracking-[0.12em] transition-colors duration-500 ${
+                        isActive ? "text-accent" : "text-muted"
+                      }`}
+                    >
+                      {event.organizer}
+                      {event.images.length > 1 ? (
+                        <span className="ml-2 text-faint">
+                          {event.images.length} photos
+                        </span>
+                      ) : null}
+                    </p>
+
+                    <p className="mt-2.5 max-w-xl text-sm leading-relaxed text-muted">
+                      {event.description}
+                    </p>
+
+                    {/* on touch / small screens the collage lives in the row */}
+                    <div className="mt-4 aspect-[4/3] lg:hidden">
+                      <Collage images={event.images} sizes="100vw" />
+                    </div>
+
+                    {event.certificate ? (
+                      <a
+                        href={event.certificate}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-3 inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-ink transition-colors hover:text-accent"
+                      >
+                        Certificate ↗
+                      </a>
+                    ) : null}
+                  </div>
+                </Reveal>
+              );
+            })}
+          </div>
+
+          {/* the preview: follows whichever row is hovered */}
+          <Reveal delay={0.1} className="hidden lg:block">
+            <div className="sticky top-28">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.div
+                    key={current.title}
+                    initial={{ opacity: 0, scale: 1.03 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.55, ease: EASE }}
+                    className="absolute inset-0"
+                  >
+                    <Collage images={current.images} sizes="40vw" />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              <p className="mt-4 font-mono text-[10.5px] uppercase tracking-[0.12em] text-muted">
+                {current.organizer} · {current.date}
+              </p>
+              <p className="mt-1 font-display text-lg font-semibold tracking-tight text-ink">
+                {current.title}
+              </p>
             </div>
           </Reveal>
-        ))}
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }

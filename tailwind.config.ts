@@ -1,28 +1,34 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        ink: "#16140F",        // warm near-black background
-        ink2: "#1C1A14",       // slightly lifted surface
-        clay: "#CC785C",       // Anthropic-like clay accent
-        clay2: "#D4A27F",      // soft clay highlight
-        cream: "#F3EEE3",      // primary text
-        sand: "#E8E2D4",       // body text
-        muted: "#A39C8C",      // secondary text
-        line: "#3A352B",       // borders
+        paper: "#FFFFFF", // page background — always white
+        surface: "#F6F6F4", // soft card surface
+        ink: "#101010", // headlines / primary text
+        body: "#3D3D3D", // body copy
+        muted: "#8C8C8C", // secondary text
+        faint: "#BDBDBD", // tertiary / ghost text
+        line: "#E9E9E7", // hairline borders
+        accent: "#FF4D00", // orange — small highlights only
+        "accent-soft": "#FFF1EA",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
-        serif: ["var(--font-newsreader)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "var(--font-sans)", "sans-serif"],
+        serif: ["var(--font-serif)", "Georgia", "serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       maxWidth: {
-        content: "1760px",
+        content: "1440px",
+      },
+      letterSpacing: {
+        kicker: "0.18em",
+      },
+      transitionTimingFunction: {
+        soft: "cubic-bezier(0.16, 1, 0.3, 1)",
       },
     },
   },
