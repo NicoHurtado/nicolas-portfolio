@@ -18,12 +18,12 @@ function Bullets({ items }: { items: string[] }) {
 
 export default function Experience() {
   return (
-    <section id="experience" className="shell scroll-mt-24 py-24 sm:py-32">
-      <div className="grid gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
+    <section id="experience" className="section-y shell scroll-mt-20 sm:scroll-mt-24">
+      <div className="grid gap-10 sm:gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-20">
         {/* sticky intro column */}
         <div className="lg:sticky lg:top-28 lg:self-start">
           <Kicker index="01" label="Experience" />
-          <h2 className="mt-6 font-display text-[clamp(2.4rem,4.5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
+          <h2 className="mt-5 font-display text-[clamp(2rem,9vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink sm:mt-6">
             <WordsIn text="Where I've" />
             <br />
             <WordsIn
@@ -33,7 +33,7 @@ export default function Experience() {
             />
           </h2>
           <Reveal delay={0.2}>
-            <p className="mt-6 max-w-sm leading-relaxed text-muted">
+            <p className="mt-5 max-w-sm leading-relaxed text-muted sm:mt-6">
               From Latin America&apos;s largest investment bank to products I
               co-founded — always at the intersection of data, AI, and
               software that ships.
@@ -48,8 +48,8 @@ export default function Experience() {
             return (
               <Reveal key={job.company} delay={i * 0.05}>
                 <article
-                  className={`group relative pl-8 sm:pl-10 ${
-                    last ? "pb-0" : "pb-12"
+                  className={`group relative pl-6 sm:pl-10 ${
+                    last ? "pb-0" : "pb-10 sm:pb-12"
                   } ${
                     last
                       ? ""
@@ -66,7 +66,7 @@ export default function Experience() {
                   />
 
                   <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+                    <span className="meta text-muted">
                       {job.period}
                       {job.current ? (
                         <span className="ml-3 inline-flex items-center gap-1.5 text-accent">
@@ -75,12 +75,12 @@ export default function Experience() {
                         </span>
                       ) : null}
                     </span>
-                    <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-faint">
+                    <span className="meta text-faint">
                       {job.location}
                     </span>
                   </div>
 
-                  <h3 className="mt-4 font-display text-2xl font-semibold tracking-tight text-ink sm:text-[1.75rem]">
+                  <h3 className="mt-3 font-display text-xl font-semibold tracking-tight text-ink sm:mt-4 sm:text-[1.75rem]">
                     {job.company}
                     {job.note ? (
                       <span className="ml-2.5 align-middle font-sans text-[13px] font-normal text-faint">
@@ -90,7 +90,7 @@ export default function Experience() {
                   </h3>
 
                   {job.role ? (
-                    <p className="mt-1 font-serif text-lg italic text-body">
+                    <p className="mt-1 font-serif text-[17px] italic text-body sm:text-lg">
                       {job.role}
                     </p>
                   ) : null}
@@ -108,7 +108,7 @@ export default function Experience() {
                       {job.roles.map((role, k) => (
                         <div
                           key={role.title}
-                          className={`relative pl-6 ${
+                          className={`relative pl-5 sm:pl-6 ${
                             k < job.roles!.length - 1
                               ? "before:absolute before:left-[3px] before:top-4 before:bottom-[-1.1rem] before:w-px before:bg-line"
                               : ""

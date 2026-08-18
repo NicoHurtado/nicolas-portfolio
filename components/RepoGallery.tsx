@@ -36,7 +36,7 @@ export default function RepoGallery({ repos }: { repos: GithubRepo[] }) {
   const visible = expanded ? filtered : filtered.slice(0, INITIAL);
 
   return (
-    <div className="rounded-[28px] border border-line bg-surface/70 p-6 sm:p-10">
+    <div className="rounded-2xl border border-line bg-surface/70 p-5 sm:rounded-[28px] sm:p-10">
       <Reveal>
         <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5">
           <div>
@@ -47,7 +47,7 @@ export default function RepoGallery({ repos }: { repos: GithubRepo[] }) {
               </span>
               <span className="kicker text-accent">Live from GitHub</span>
             </span>
-            <h3 className="mt-3 font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+            <h3 className="mt-3 font-display text-[clamp(1.35rem,5.5vw,2.1rem)] font-semibold tracking-tight text-ink">
               Everything else I&apos;m building
             </h3>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-muted">
@@ -60,7 +60,7 @@ export default function RepoGallery({ repos }: { repos: GithubRepo[] }) {
             href={profile.github}
             target="_blank"
             rel="noreferrer"
-            className="group/gh inline-flex items-center gap-2 rounded-full border border-line bg-paper px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-ink transition-colors duration-300 hover:border-ink"
+            className="group/gh meta inline-flex items-center gap-2 rounded-full border border-line bg-paper px-4 py-2.5 text-ink transition-colors duration-300 hover:border-ink sm:px-5"
           >
             View profile
             <span className="transition-transform duration-300 ease-soft group-hover/gh:-translate-y-0.5 group-hover/gh:translate-x-0.5">
@@ -71,8 +71,8 @@ export default function RepoGallery({ repos }: { repos: GithubRepo[] }) {
       </Reveal>
 
       <Reveal delay={0.05}>
-        <div className="mt-8 flex flex-wrap items-center gap-x-5 gap-y-4">
-          <div className="flex flex-wrap gap-1.5">
+        <div className="mt-7 sm:mt-8">
+          <div className="scroll-row">
             {[["All", repos.length] as const, ...languages].map(([lang, count]) => (
               <button
                 key={lang}
@@ -80,7 +80,7 @@ export default function RepoGallery({ repos }: { repos: GithubRepo[] }) {
                   setFilter(lang);
                   setExpanded(false);
                 }}
-                className={`rounded-full border px-3.5 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-300 ${
+                className={`shrink-0 snap-start whitespace-nowrap rounded-full border px-3.5 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.1em] transition-colors duration-300 ${
                   filter === lang
                     ? "border-ink bg-ink text-paper"
                     : "border-line text-muted hover:border-muted hover:text-ink"
@@ -93,14 +93,14 @@ export default function RepoGallery({ repos }: { repos: GithubRepo[] }) {
         </div>
       </Reveal>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-7 grid gap-3.5 sm:mt-8 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {visible.map((repo, i) => (
           <Reveal key={repo.name} delay={(i % 3) * 0.06} y={20}>
             <a
               href={repo.url}
               target="_blank"
               rel="noreferrer"
-              className="group flex h-full flex-col justify-between rounded-2xl border border-line bg-paper p-6 transition-all duration-500 ease-soft hover:-translate-y-1 hover:border-faint hover:shadow-[0_18px_40px_-24px_rgba(16,16,16,0.18)]"
+              className="group flex h-full flex-col justify-between rounded-2xl border border-line bg-paper p-5 sm:p-6 transition-all duration-500 ease-soft hover:-translate-y-1 hover:border-faint hover:shadow-[0_18px_40px_-24px_rgba(16,16,16,0.18)]"
             >
               <div>
                 <div className="flex items-start justify-between gap-3">
@@ -129,10 +129,10 @@ export default function RepoGallery({ repos }: { repos: GithubRepo[] }) {
       </div>
 
       {filtered.length > INITIAL ? (
-        <div className="mt-10 flex justify-center">
+        <div className="mt-8 flex justify-center sm:mt-10">
           <button
             onClick={() => setExpanded((v) => !v)}
-            className="rounded-full border border-line px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] text-ink transition-colors duration-300 hover:border-ink"
+            className="meta rounded-full border border-line px-5 py-2.5 text-ink transition-colors duration-300 hover:border-ink sm:px-6"
           >
             {expanded ? "Show less" : `All ${filtered.length} projects`}
           </button>

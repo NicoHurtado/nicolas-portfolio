@@ -33,8 +33,8 @@ export default function Statement() {
   const words = profile.bio.split(" ");
 
   return (
-    <section className="shell py-16 sm:py-20">
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:items-start lg:gap-16">
+    <section className="shell py-14 sm:py-20">
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,6fr)] lg:items-start lg:gap-16">
         <div>
           <Reveal y={12}>
             <div className="flex items-center gap-2.5">
@@ -43,7 +43,7 @@ export default function Statement() {
             </div>
           </Reveal>
 
-          <h2 className="mt-4 font-display text-[clamp(1.8rem,3.2vw,2.8rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-ink">
+          <h2 className="mt-4 font-display text-[clamp(1.7rem,7vw,2.8rem)] font-semibold leading-[1.06] tracking-[-0.03em] text-ink">
             <WordsIn text="Complexity in." />
             <br />
             <WordsIn
@@ -59,7 +59,7 @@ export default function Statement() {
               href={profile.tiktok}
               target="_blank"
               rel="noreferrer"
-              className="group mt-8 flex max-w-xs items-center gap-4 rounded-2xl border border-line bg-paper p-4 transition-all duration-500 ease-soft hover:-translate-y-0.5 hover:border-ink hover:shadow-[0_18px_40px_-28px_rgba(16,16,16,0.3)]"
+              className="group mt-8 flex w-full max-w-xs items-center gap-4 rounded-2xl border border-line bg-paper p-4 transition-all duration-500 ease-soft hover:-translate-y-0.5 hover:border-ink hover:shadow-[0_18px_40px_-28px_rgba(16,16,16,0.3)]"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-surface text-ink transition-colors duration-500 group-hover:bg-accent group-hover:text-paper">
                 <svg
@@ -91,7 +91,7 @@ export default function Statement() {
         <div>
           <p
             ref={ref}
-            className="max-w-2xl text-lg leading-relaxed sm:text-xl sm:leading-relaxed"
+            className="max-w-2xl text-[17px] leading-relaxed sm:text-xl sm:leading-relaxed"
           >
             {words.map((word, i) => (
               <Word
@@ -122,7 +122,7 @@ export default function Statement() {
                 {profile.interests}
               </p>
               {/* The one that's personal, given room to read as such. */}
-              <div className="mt-6 flex items-start gap-4 rounded-2xl border border-accent/25 bg-accent-soft p-5">
+              <div className="mt-6 flex items-start gap-3.5 rounded-2xl border border-accent/25 bg-accent-soft p-4 sm:gap-4 sm:p-5">
                 <span className="mt-0.5 text-accent" aria-hidden>
                   <svg
                     viewBox="0 0 16 16"
@@ -137,7 +137,7 @@ export default function Statement() {
                   </svg>
                 </span>
                 <span>
-                  <span className="block font-display text-lg font-semibold tracking-tight text-ink">
+                  <span className="block font-display text-[17px] font-semibold tracking-tight text-ink sm:text-lg">
                     Wellness &amp; health
                   </span>
                   <span className="mt-1 block leading-relaxed text-body">

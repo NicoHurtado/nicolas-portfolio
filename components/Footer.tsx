@@ -8,9 +8,9 @@ export default function Footer() {
 
   return (
     <footer id="contact" className="relative overflow-hidden border-t border-line">
-      <div className="shell pb-10 pt-24 sm:pt-32">
+      <div className="shell pb-10 pt-16 sm:pt-24 lg:pt-32">
         <Kicker index="07" label="Contact" />
-        <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.6rem,6vw,5.5rem)] font-semibold leading-[1.0] tracking-[-0.035em] text-ink">
+        <h2 className="mt-5 max-w-4xl font-display text-[clamp(2.1rem,10vw,5.5rem)] font-semibold leading-[1.05] tracking-[-0.035em] text-ink sm:mt-6 sm:leading-[1.0]">
           <WordsIn text="Let's build something" />
           <br />
           <WordsIn
@@ -23,7 +23,7 @@ export default function Footer() {
         <Reveal delay={0.25}>
           <a
             href={`mailto:${profile.email}`}
-            className="group mt-10 inline-flex items-center gap-3 text-lg text-body transition-colors hover:text-ink sm:text-xl"
+            className="group mt-8 flex w-full items-center gap-2.5 break-all text-[15px] text-body transition-colors hover:text-ink sm:mt-10 sm:inline-flex sm:w-auto sm:gap-3 sm:break-normal sm:text-xl"
           >
             <span className="kicker-dot" />
             {profile.email}
@@ -34,7 +34,7 @@ export default function Footer() {
         </Reveal>
 
         <Reveal delay={0.3}>
-          <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3 font-mono text-[11px] uppercase tracking-[0.14em]">
+          <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 font-mono text-[10.5px] uppercase tracking-[0.14em] sm:gap-x-8 sm:text-[11px]">
             {[
               ["GitHub", profile.github],
               ["LinkedIn", profile.linkedin],
@@ -53,7 +53,7 @@ export default function Footer() {
           </div>
         </Reveal>
 
-        <div className="mt-16 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 font-mono text-[10.5px] uppercase tracking-[0.12em] text-faint">
+        <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-6 font-mono text-[10px] uppercase tracking-[0.12em] text-faint sm:mt-16 sm:gap-4 sm:text-[10.5px]">
           <span>
             © {year} {profile.shortName} · {profile.location}
           </span>
@@ -64,7 +64,7 @@ export default function Footer() {
       {/* ghost name — quiet, oversized, cropped at the bottom edge */}
       <div
         aria-hidden
-        className="pointer-events-none select-none whitespace-nowrap text-center font-display text-[17.5vw] font-bold leading-[0.72] tracking-[-0.04em] text-ink/[0.04]"
+        className="pointer-events-none w-full select-none overflow-hidden whitespace-nowrap text-center font-display text-[17.5vw] font-bold leading-[0.72] tracking-[-0.04em] text-ink/[0.04]"
       >
         NICOLAS
       </div>

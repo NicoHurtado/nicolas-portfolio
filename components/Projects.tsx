@@ -7,9 +7,9 @@ import { Kicker, Reveal, WordsIn } from "./motion";
 
 export default function Projects({ repos }: { repos: GithubRepo[] }) {
   return (
-    <section id="projects" className="shell scroll-mt-24 py-24 sm:py-32">
+    <section id="projects" className="section-y shell scroll-mt-20 sm:scroll-mt-24">
       <Kicker index="03" label="Selected work" />
-      <h2 className="mt-6 max-w-3xl font-display text-[clamp(2.4rem,4.5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
+      <h2 className="mt-5 max-w-3xl font-display text-[clamp(2rem,9vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink sm:mt-6">
         <WordsIn text="Products that are" />{" "}
         <WordsIn
           text="alive in production."
@@ -19,20 +19,20 @@ export default function Projects({ repos }: { repos: GithubRepo[] }) {
       </h2>
 
       {/* featured projects — quiet editorial rows */}
-      <div className="mt-16">
+      <div className="mt-10 sm:mt-16">
         {highlightedProjects.map((p, i) => (
           <Reveal key={p.name} delay={i * 0.04}>
-            <article className="group grid gap-5 border-t border-line py-10 transition-colors duration-500 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-12">
+            <article className="group grid gap-4 border-t border-line py-8 transition-colors duration-500 sm:gap-5 sm:py-10 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-12">
               <div>
-                <div className="flex items-baseline gap-4">
+                <div className="flex items-baseline gap-3 sm:gap-4">
                   <span className="font-mono text-[11px] text-faint">
                     0{i + 1}
                   </span>
-                  <h3 className="font-display text-[clamp(1.6rem,3vw,2.4rem)] font-semibold tracking-tight text-ink transition-transform duration-500 ease-soft group-hover:translate-x-1.5">
+                  <h3 className="font-display text-[clamp(1.45rem,6vw,2.4rem)] font-semibold tracking-tight text-ink transition-transform duration-500 ease-soft group-hover:translate-x-1.5">
                     {p.name}
                   </h3>
                 </div>
-                <div className="mt-4 flex flex-wrap gap-2 md:pl-10">
+                <div className="mt-4 flex flex-wrap gap-1.5 sm:gap-2 md:pl-10">
                   {p.technologies.map((t) => (
                     <span
                       key={t}
@@ -44,9 +44,9 @@ export default function Projects({ repos }: { repos: GithubRepo[] }) {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-between gap-5 md:pt-1.5">
+              <div className="flex flex-col justify-between gap-4 sm:gap-5 md:pt-1.5">
                 <p className="leading-relaxed text-body">{p.description}</p>
-                <div className="flex items-center gap-6 font-mono text-[11px] uppercase tracking-[0.14em]">
+                <div className="meta flex items-center gap-6">
                   {p.live ? (
                     <a
                       href={p.live}
@@ -80,7 +80,7 @@ export default function Projects({ repos }: { repos: GithubRepo[] }) {
 
       {/* live GitHub feed */}
       {repos.length > 0 ? (
-        <div className="mt-20">
+        <div className="mt-14 sm:mt-20">
           <RepoGallery repos={repos} />
         </div>
       ) : null}

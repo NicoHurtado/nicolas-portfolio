@@ -4,11 +4,22 @@
 
 html {
   scroll-behavior: smooth;
+  /* Never let a wide child open a horizontal scrollbar on small screens */
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Media never breaks the grid it sits in */
+img,
+video,
+svg {
+  max-width: 100%;
 }
 
 ::selection {
@@ -32,7 +43,7 @@ body {
 @layer components {
   /* Micro label: mono, uppercase, wide tracking — used for section kickers */
   .kicker {
-    @apply font-mono text-[11px] uppercase tracking-kicker text-muted;
+    @apply font-mono text-[10px] uppercase tracking-[0.14em] text-muted sm:text-[11px] sm:tracking-kicker;
   }
 
   .kicker-dot {
@@ -41,7 +52,33 @@ body {
 
   /* Shared horizontal padding for every section */
   .shell {
-    @apply mx-auto w-full max-w-content px-6 sm:px-10 lg:px-16;
+    @apply mx-auto w-full max-w-content px-5 sm:px-8 md:px-10 lg:px-16;
+  }
+
+  /* Standard vertical rhythm for a full section — tighter on phones */
+  .section-y {
+    @apply py-16 sm:py-24 lg:py-32;
+  }
+
+  /* Small mono label used on chips, meta rows and buttons */
+  .meta {
+    @apply font-mono text-[10px] uppercase tracking-[0.12em] sm:text-[11px] sm:tracking-[0.14em];
+  }
+
+  /* Row of filters that scrolls sideways instead of stacking on phones */
+  .scroll-row {
+    @apply -mx-5 flex snap-x gap-1.5 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0;
+    scrollbar-width: none;
+  }
+  .scroll-row::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Scrollbar styling only where there is a real (desktop) pointer */
+@media (pointer: coarse) {
+  ::-webkit-scrollbar {
+    width: 0;
   }
 }
 

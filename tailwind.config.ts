@@ -4,6 +4,10 @@ const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      screens: {
+        // Very small phones (iPhone SE / 320–374px) get their own step
+        xs: "380px",
+      },
       colors: {
         paper: "#FFFFFF", // page background — always white
         surface: "#F6F6F4", // soft card surface

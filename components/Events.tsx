@@ -65,11 +65,11 @@ export default function Events({ events }: { events: EventWithImages[] }) {
   const current = events[active];
 
   return (
-    <section id="events" className="scroll-mt-24 py-24 sm:py-32">
+    <section id="events" className="section-y scroll-mt-20 sm:scroll-mt-24">
       <div className="shell">
         <Kicker index="06" label="Events & community" />
-        <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-          <h2 className="max-w-3xl font-display text-[clamp(2.4rem,4.5vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
+        <div className="mt-5 flex flex-wrap items-end justify-between gap-4 sm:mt-6 sm:gap-6">
+          <h2 className="max-w-3xl font-display text-[clamp(2rem,9vw,4rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">
             <WordsIn text="Out in" />{" "}
             <WordsIn
               text="the ecosystem."
@@ -78,13 +78,13 @@ export default function Events({ events }: { events: EventWithImages[] }) {
             />
           </h2>
           <Reveal delay={0.2}>
-            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">
+            <p className="meta text-muted">
               {events.length} events & visits
             </p>
           </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
+        <div className="mt-10 grid gap-10 sm:mt-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-16">
           {/* the list: every row the same size */}
           <div>
             {events.map((event, i) => {
@@ -94,11 +94,11 @@ export default function Events({ events }: { events: EventWithImages[] }) {
                   <div
                     onMouseEnter={() => setActive(i)}
                     onFocus={() => setActive(i)}
-                    className="group border-t border-line py-6 transition-colors duration-300 last:border-b"
+                    className="group border-t border-line py-5 transition-colors duration-300 last:border-b sm:py-6"
                   >
-                    <div className="flex items-baseline justify-between gap-4">
+                    <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
                       <h3
-                        className={`font-display text-lg font-semibold tracking-tight transition-all duration-500 ease-soft sm:text-xl ${
+                        className={`font-display text-[17px] font-semibold tracking-tight transition-all duration-500 ease-soft sm:text-xl ${
                           isActive ? "translate-x-1.5 text-ink" : "text-body"
                         }`}
                       >
@@ -127,8 +127,8 @@ export default function Events({ events }: { events: EventWithImages[] }) {
                     </p>
 
                     {/* on touch / small screens the collage lives in the row */}
-                    <div className="mt-4 aspect-[4/3] lg:hidden">
-                      <Collage images={event.images} sizes="100vw" />
+                    <div className="mt-4 aspect-[4/3] sm:aspect-[16/10] lg:hidden">
+                      <Collage images={event.images} sizes="(min-width: 640px) 90vw, 100vw" />
                     </div>
 
                     {event.certificate ? (

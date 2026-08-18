@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight, Instrument_Serif, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -40,6 +40,13 @@ export const metadata: Metadata = {
       "Data engineering, data science, AI and backend. Experience, projects, certifications.",
     type: "website",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#FFFFFF",
 };
 
 export default function RootLayout({
